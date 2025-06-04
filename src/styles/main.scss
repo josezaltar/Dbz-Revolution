@@ -1,8 +1,7 @@
 @use "variaveis";
 
-// Definição da Nova Fonte (coloque o arquivo da fonte em assets/fonts/)
 @font-face {
-  font-family: "SaiyanSans"; // Mesmo nome usado em _variaveis.scss
+  font-family: "SaiyanSans";
   src: url("../../assets/fonts/Saiyan-Sans.ttf") format("truetype"); // <<< MUDE AQUI para o nome do seu arquivo de fonte
   font-weight: normal;
   font-style: normal;
