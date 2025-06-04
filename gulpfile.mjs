@@ -11,14 +11,14 @@ function styles() {
   return gulp
     .src("./src/styles/*.scss")
     .pipe(sassCompiler({ outputStyle: "compressed" }))
-    .pipe(gulp.dest("./dist/css"));
+    .pipe(gulp.dest("./public/css")); // Alterado para public
 }
 
 function images() {
   return gulp
     .src(["./src/images/**/*"], { encoding: false })
     .pipe(imagemin())
-    .pipe(gulp.dest("./dist/images"));
+    .pipe(gulp.dest("./public/images")); // Alterado para public
 }
 
 // Exportando tarefas
