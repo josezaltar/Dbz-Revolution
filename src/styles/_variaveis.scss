@@ -11,12 +11,18 @@ $corSecundaria: #007bff; // Azul (Detalhes, Ki, Vegeta)
 $corTerciaria: #ffd700; // Amarelo/Dourado (Super Saiyajin, destaques)
 
 $corNeutra: #343a40; // Um cinza escuro para cards, fundos de seção
-$corDestaqueHover: color.adjust(
-  $corPrimaria,
-  $lightness: 10%
-); // Usando color.adjust
 $corBorda: #495057;
 
 // Fontes (Exemplo, você pode definir mais aqui)
 $fontePrincipal: "SaiyanSans", sans-serif; // Nome da fonte que você escolherá
 $fonteTitulos: "SaiyanSans", sans-serif; // Pode ser a mesma ou outra
+
+// Usando color.adjust para clarear e escurecer
+$corDestaqueHover: color.adjust(
+  $corPrimaria,
+  $lightness: 10%
+); // Usando color.adjust para clarear
+$corFundoEscuro: color.adjust(
+  $corDeFundo,
+  $lightness: -5%
+); // Usando color.adjust para escurecer
