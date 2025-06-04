@@ -1,29 +1,26 @@
-@use "sass:color"; // Esta linha é crucial
+@use "sass:color"; // Certifique-se que esta é a primeira linha de código SASS funcional
 @use "variaveis";
 
 @font-face {
   font-family: "SaiyanSans";
-  src: url("../../assets/fonts/Saiyan-Sans.ttf") format("truetype"); // <<< MUDE AQUI para o nome do seu arquivo de fonte
+  src: url("../../assets/fonts/Saiyan-Sans.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 body {
-  font-family: variaveis.$fontePrincipal; // Aplicando a nova fonte principal
+  font-family: variaveis.$fontePrincipal;
   background-color: variaveis.$corDeFundo;
   color: variaveis.$corTexto;
   margin: 0;
   padding: 0;
-  line-height: 1.6; // Adicionado para melhor legibilidade
+  line-height: 1.6;
 }
 
 header {
-  background-color: color.adjust(
-    variaveis.$corDeFundo,
-    $lightness: -5%
-  ); // Um pouco mais escuro que o fundo
-  color: variaveis.$corTexto; // Texto do header
-  padding: 10px 0; // Adicionado padding
+  background-color: color.adjust(variaveis.$corDeFundo, $lightness: -5%);
+  color: variaveis.$corTexto;
+  padding: 10px 0;
 
   nav {
     ul {
@@ -39,11 +36,11 @@ header {
         a {
           text-decoration: none;
           color: variaveis.$corTexto;
-          font-size: 28px; // Ajuste o tamanho conforme sua fonte
-          font-family: variaveis.$fonteTitulos; // Fonte para links de navegação
+          font-size: 28px;
+          font-family: variaveis.$fonteTitulos;
 
           &:hover {
-            color: variaveis.$corPrimaria; // Cor de hover
+            color: variaveis.$corPrimaria;
           }
         }
       }
@@ -53,8 +50,6 @@ header {
 
 section.logo {
   text-align: center;
-  // Remova background-color se a imagem cobrir tudo, ou defina uma cor de fallback
-  // background-color: variaveis.$corSecundaria;
   padding: 0;
   margin: 0;
   width: 100vw;
@@ -65,28 +60,16 @@ section.logo {
     height: 100%;
     object-fit: cover;
   }
-
-  // Se quiser um título sobre a imagem:
-  // h1 {
-  //     position: absolute;
-  //     top: 50%;
-  //     left: 50%;
-  //     transform: translate(-50%, -50%);
-  //     color: variaveis.$corTerciaria;
-  //     font-size: 5rem;
-  //     text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
-  // }
 }
 
-// Renomear .sinopse para .sobre-jogo ou similar se desejar
 .sinopse {
-  // Ou .sobre-jogo
-  margin: 20px auto; // Adicionado margin top/bottom
-  max-width: 80%; // Ajustado max-width
-  background-color: lighten(
+  margin: 20px auto;
+  max-width: 80%;
+  background-color: color.adjust(
+    // CORRIGIDO
     variaveis.$corDeFundo,
-    5%
-  ); // Fundo um pouco mais claro
+    $lightness: 5%
+  );
   border-radius: 8px;
   padding: 20px;
   border: 1px solid variaveis.$corBorda;
@@ -103,31 +86,29 @@ section.logo {
 
   p {
     color: variaveis.$corTextoSecundario;
-    font-size: 22px; // Ajuste conforme necessário
+    font-size: 22px;
     margin-bottom: 15px;
     i b {
-      // Para o itálico e negrito no texto de exemplo
       color: variaveis.$corTexto;
     }
   }
 }
 
-// Estilos para a seção de Personagens (revisar e adaptar)
 .personagens {
-  padding: 40px 20px; // Aumentado padding
+  padding: 40px 20px;
 
   h1 {
     text-align: center;
     font-size: 3rem;
     font-family: variaveis.$fonteTitulos;
-    color: variaveis.$corTerciaria; // Usando cor terciária para destaque
+    color: variaveis.$corTerciaria;
     margin-bottom: 30px;
   }
 
   table {
     width: 100%;
-    border-collapse: separate; // Alterado para separate para usar border-spacing
-    border-spacing: 10px; // Espaço entre as células
+    border-collapse: separate;
+    border-spacing: 10px;
     text-align: center;
     margin: 0 auto;
   }
@@ -138,62 +119,87 @@ section.logo {
     background-color: variaveis.$corNeutra;
     border: 2px solid variaveis.$corPrimaria;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); // Adicionada sombra
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
 
   img {
     width: 100%;
-    max-width: 180px; // Ajustado max-width
-    height: 180px; // Ajustado height
+    max-width: 180px;
+    height: 180px;
     object-fit: cover;
-    border-radius: 8px; // Suavizado border-radius
+    border-radius: 8px;
     margin-bottom: 15px;
-    border: 2px solid variaveis.$corSecundaria; // Borda na imagem
+    border: 2px solid variaveis.$corSecundaria;
   }
 
   h3 {
     font-size: 2rem;
     font-family: variaveis.$fonteTitulos;
-    color: variaveis.$corPrimaria; // Cor para o nome do personagem
+    color: variaveis.$corPrimaria;
     margin: 10px 0;
   }
 
   p {
-    font-size: 1.1rem; // Ajustado
+    font-size: 1.1rem;
     line-height: 1.5;
-    color: variaveis.$corTexto; // Texto dentro do card
+    color: variaveis.$corTexto;
   }
 }
 
-// ... (Mantenha e ajuste as media queries para .personagens) ...
+// Responsividade para Personagens (do arquivo original)
+@media (max-width: 768px) {
+  .personagens table {
+    font-size: 0.9rem;
+  }
 
-// Estilos para Seção Trailer/Galeria (revisar e adaptar)
+  .personagens img {
+    max-width: 120px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .personagens table {
+    font-size: 0.8rem;
+  }
+
+  .personagens img {
+    max-width: 100px;
+    height: 100px;
+  }
+
+  .personagens td {
+    padding: 10px;
+  }
+}
+// Fim da responsividade para Personagens
+
 .trailer {
-  // ou .galeria
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 0; // Adicionado padding vertical
+  padding: 40px 0;
   margin: 0;
   width: 100vw;
-  min-height: 80vh; // Altura mínima
+  min-height: 80vh;
   background-color: color.adjust(variaveis.$corDeFundo, $lightness: -3%);
 
   iframe {
     width: 80%;
-    height: 45vw; // Proporcional à largura
+    height: 45vw;
     max-width: 900px;
     max-height: 506px;
-    border: 3px solid variaveis.$corTerciaria; // Borda temática
+    border: 3px solid variaveis.$corTerciaria;
     border-radius: 8px;
   }
-  // Adicione estilos para .galeria-imagens se for usar
 }
 
-// --- NOVOS ESTILOS PARA SEÇÕES ADICIONADAS ---
 .noticias {
   padding: 40px 20px;
-  background-color: lighten(variaveis.$corDeFundo, 3%);
+  background-color: color.adjust(
+    variaveis.$corDeFundo,
+    $lightness: 3%
+  ); // CORRIGIDO
 
   h1 {
     text-align: center;
@@ -221,7 +227,7 @@ section.logo {
       margin-bottom: 10px;
     }
     p {
-      color: variaveis.$corTexto; // Texto dentro do card de notícia
+      color: variaveis.$corTexto;
     }
     a {
       color: variaveis.$corSecundaria;
@@ -259,7 +265,7 @@ section.logo {
       margin-top: 0;
     }
     p {
-      color: variaveis.$corTexto; // Texto dentro do card de download
+      color: variaveis.$corTexto;
       margin-bottom: 10px;
     }
     .download-info {
@@ -269,7 +275,7 @@ section.logo {
     .btn-download {
       display: inline-block;
       background-color: variaveis.$corSecundaria;
-      color: variaveis.$corDeFundo; // Ou um texto bem contrastante
+      color: variaveis.$corDeFundo;
       padding: 12px 25px;
       text-decoration: none;
       border-radius: 5px;
@@ -279,7 +285,10 @@ section.logo {
       transition: background-color 0.3s ease;
 
       &:hover {
-        background-color: lighten(variaveis.$corSecundaria, 10%);
+        background-color: color.adjust(
+          variaveis.$corSecundaria,
+          $lightness: 10%
+        ); // CORRIGIDO
       }
     }
   }
@@ -287,7 +296,10 @@ section.logo {
 
 .comunidade {
   padding: 40px 20px;
-  background-color: lighten(variaveis.$corDeFundo, 3%);
+  background-color: color.adjust(
+    variaveis.$corDeFundo,
+    $lightness: 3%
+  ); // CORRIGIDO
   text-align: center;
 
   h1 {
@@ -322,14 +334,83 @@ section.logo {
   }
 }
 
-footer {
+// Adicionando os estilos para .tutorial-jogo e .guia-quests que foram sugeridos
+.tutorial-jogo {
+  padding: 40px 20px;
+  background-color: variaveis.$corNeutra;
+  color: variaveis.$corTexto;
+
+  h1 {
+    color: variaveis.$corPrimaria;
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: variaveis.$fonteTitulos;
+  }
+  h2 {
+    color: variaveis.$corSecundaria;
+    margin-top: 30px;
+    border-bottom: 1px solid variaveis.$corBorda;
+    padding-bottom: 5px;
+    font-family: variaveis.$fonteTitulos;
+  }
+  ul {
+    list-style: none;
+    padding-left: 0;
+    li {
+      margin-bottom: 8px;
+      strong {
+        color: variaveis.$corTerciaria; // Ou outra cor de destaque para os comandos
+      }
+    }
+  }
+  em {
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.9em;
+    color: variaveis.$corTextoSecundario;
+  }
+}
+
+.guia-quests {
+  padding: 40px 20px;
   background-color: color.adjust(
     variaveis.$corDeFundo,
-    $lightness: -10%
-  ); // Mais escuro
-  color: variaveis.$corTextoSecundario; // Texto do footer
+    $lightness: 2%
+  ); // Um pouco diferente para variar
+
+  h1 {
+    color: variaveis.$corTerciaria;
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: variaveis.$fonteTitulos;
+  }
+  h2 {
+    color: variaveis.$corPrimaria;
+    margin-top: 30px;
+    font-family: variaveis.$fonteTitulos;
+  }
+  ul {
+    list-style: disc; // Adicionando um estilo de lista para diferenciar
+    padding-left: 20px; // Pequeno recuo para listas com marcadores
+    li {
+      margin-bottom: 8px;
+      strong {
+        color: variaveis.$corSecundaria;
+      }
+    }
+  }
+  p {
+    margin-bottom: 15px; // Espaçamento entre parágrafos
+  }
+}
+// Fim dos estilos para .tutorial-jogo e .guia-quests
+
+footer {
+  background-color: color.adjust(variaveis.$corDeFundo, $lightness: -10%);
+  color: variaveis.$corTextoSecundario;
   text-align: center;
-  padding: 20px; // Aumentado padding
+  padding: 20px;
   font-size: 0.9rem;
   p {
     margin: 5px 0;
