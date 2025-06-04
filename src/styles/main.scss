@@ -1,3 +1,4 @@
+@use "sass:color"; // Esta linha é crucial
 @use "variaveis";
 
 @font-face {
@@ -17,9 +18,9 @@ body {
 }
 
 header {
-  background-color: darken(
+  background-color: color.adjust(
     variaveis.$corDeFundo,
-    5%
+    $lightness: -5%
   ); // Um pouco mais escuro que o fundo
   color: variaveis.$corTexto; // Texto do header
   padding: 10px 0; // Adicionado padding
@@ -176,7 +177,7 @@ section.logo {
   margin: 0;
   width: 100vw;
   min-height: 80vh; // Altura mínima
-  background-color: darken(variaveis.$corDeFundo, 3%);
+  background-color: color.adjust(variaveis.$corDeFundo, $lightness: -3%);
 
   iframe {
     width: 80%;
@@ -322,7 +323,10 @@ section.logo {
 }
 
 footer {
-  background-color: darken(variaveis.$corDeFundo, 10%); // Mais escuro
+  background-color: color.adjust(
+    variaveis.$corDeFundo,
+    $lightness: -10%
+  ); // Mais escuro
   color: variaveis.$corTextoSecundario; // Texto do footer
   text-align: center;
   padding: 20px; // Aumentado padding
