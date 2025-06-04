@@ -15,6 +15,10 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.6;
+
+  * {
+    -webkit-text-stroke: 0.1px #000;
+  }
 }
 
 header {
@@ -58,6 +62,7 @@ section.logo {
   img {
     width: 100%;
     height: 100%;
+    object-position: center;
     object-fit: cover;
   }
 }
@@ -65,20 +70,23 @@ section.logo {
 .sinopse {
   margin: 20px auto;
   max-width: 80%;
-  background-color: color.adjust(
-    // CORRIGIDO
-    variaveis.$corDeFundo,
-    $lightness: 5%
-  );
+  background-color: color.adjust(variaveis.$corDeFundo, $lightness: 5%);
   border-radius: 8px;
   padding: 20px;
   border: 1px solid variaveis.$corBorda;
 
-  h1,
+  h1 {
+    font-family: variaveis.$fonteTitulos;
+    font-size: 80px;
+    color: variaveis.$corPrimaria;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
   h2,
   h3 {
     font-family: variaveis.$fonteTitulos;
-    font-size: 40px;
+    font-size: 28px;
     color: variaveis.$corPrimaria;
     text-align: center;
     margin-bottom: 20px;
@@ -86,8 +94,10 @@ section.logo {
 
   p {
     color: variaveis.$corTextoSecundario;
-    font-size: 22px;
+    font-size: 20px;
     margin-bottom: 15px;
+    -webkit-text-stroke: 0.2px #000;
+
     i b {
       color: variaveis.$corTexto;
     }
@@ -98,11 +108,11 @@ section.logo {
   padding: 40px 20px;
 
   h1 {
-    text-align: center;
-    font-size: 3rem;
     font-family: variaveis.$fonteTitulos;
-    color: variaveis.$corTerciaria;
-    margin-bottom: 30px;
+    font-size: 80px;
+    color: variaveis.$corPrimaria;
+    text-align: center;
+    margin-bottom: 20px;
   }
 
   table {
@@ -172,10 +182,10 @@ section.logo {
     padding: 10px;
   }
 }
-// Fim da responsividade para Personagens
 
 .trailer {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 40px 0;
@@ -183,6 +193,14 @@ section.logo {
   width: 100vw;
   min-height: 80vh;
   background-color: color.adjust(variaveis.$corDeFundo, $lightness: -3%);
+
+  h1 {
+    font-family: variaveis.$fonteTitulos;
+    font-size: 80px;
+    color: variaveis.$corPrimaria;
+    text-align: center;
+    margin-bottom: 20px;
+  }
 
   iframe {
     width: 80%;
@@ -194,61 +212,92 @@ section.logo {
   }
 }
 
-.noticias {
+.tutorial-jogo {
   padding: 40px 20px;
-  background-color: color.adjust(
-    variaveis.$corDeFundo,
-    $lightness: 3%
-  ); // CORRIGIDO
+  background-color: color.adjust(variaveis.$corDeFundo, $lightness: 3%);
+  color: variaveis.$corTexto;
+  text-align: center;
 
   h1 {
-    text-align: center;
     font-family: variaveis.$fonteTitulos;
-    color: variaveis.$corTerciaria;
-    margin-bottom: 30px;
-    font-size: 2.8rem;
+    font-size: 80px;
+    color: variaveis.$corPrimaria;
+    margin-bottom: 20px;
+    text-align: center;
+    -webkit-text-stroke: 1px #000; // Contorno preto
   }
 
-  .noticia-item {
-    background-color: variaveis.$corNeutra;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    border-left: 5px solid variaveis.$corPrimaria;
+  .container {
+    p {
+      font-size: 22px;
+      color: variaveis.$corTextoSecundario;
+      margin-bottom: 15px;
+    }
 
     h2 {
-      color: variaveis.$corPrimaria;
-      font-family: variaveis.$fonteTitulos;
-      margin-top: 0;
-    }
-    .data-noticia {
-      font-size: 0.9em;
-      color: variaveis.$corTextoSecundario;
-      margin-bottom: 10px;
-    }
-    p {
-      color: variaveis.$corTexto;
-    }
-    a {
+      font-size: 32px;
       color: variaveis.$corSecundaria;
-      text-decoration: none;
-      font-weight: bold;
-      &:hover {
-        text-decoration: underline;
+      margin-top: 30px;
+      border-bottom: 1px solid variaveis.$corBorda;
+      padding-bottom: 5px;
+      font-family: variaveis.$fonteTitulos;
+      -webkit-text-stroke: 1px #000; // Contorno preto
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+
+      li {
+        margin-bottom: 8px;
+        strong {
+          color: variaveis.$corTerciaria;
+        }
       }
     }
+
+    em {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.9em;
+      color: variaveis.$corTextoSecundario;
+    }
+  }
+}
+
+// Responsividade para dispositivos menores
+@media (max-width: 768px) {
+  .tutorial-jogo h1 {
+    font-size: 40px; // Ajuste do tamanho do título em telas menores
+  }
+
+  .tutorial-jogo h2 {
+    font-size: 24px; // Ajuste do tamanho do subtítulo
+  }
+}
+
+@media (max-width: 480px) {
+  .tutorial-jogo h1 {
+    font-size: 28px; // Ajuste do tamanho do título em telas muito pequenas
+  }
+
+  .tutorial-jogo h2 {
+    font-size: 20px; // Ajuste do tamanho do subtítulo
   }
 }
 
 .downloads {
   padding: 40px 20px;
   text-align: center;
+  font-size: 40px;
 
   h1 {
     font-family: variaveis.$fonteTitulos;
-    color: variaveis.$corTerciaria;
-    margin-bottom: 30px;
-    font-size: 2.8rem;
+    font-size: 80px;
+    color: variaveis.$corPrimaria;
+    text-align: center;
+    margin-bottom: 20px;
   }
 
   .download-item {
@@ -263,6 +312,7 @@ section.logo {
     h3 {
       color: variaveis.$corPrimaria;
       margin-top: 0;
+      font-size: 24px;
     }
     p {
       color: variaveis.$corTexto;
@@ -271,11 +321,12 @@ section.logo {
     .download-info {
       font-size: 0.9em;
       color: variaveis.$corTextoSecundario;
+      -webkit-text-stroke: 0.2px #000; // Contorno de 1px na cor preta
     }
     .btn-download {
       display: inline-block;
       background-color: variaveis.$corSecundaria;
-      color: variaveis.$corDeFundo;
+      color: variaveis.$corTexto;
       padding: 12px 25px;
       text-decoration: none;
       border-radius: 5px;
@@ -288,7 +339,7 @@ section.logo {
         background-color: color.adjust(
           variaveis.$corSecundaria,
           $lightness: 10%
-        ); // CORRIGIDO
+        );
       }
     }
   }
@@ -301,10 +352,12 @@ section.logo {
 
   h1 {
     font-family: variaveis.$fonteTitulos;
-    color: variaveis.$corTerciaria;
+    font-size: 80px;
+    color: variaveis.$corPrimaria;
+    text-align: center;
     margin-bottom: 20px;
-    font-size: 2.8rem;
   }
+
   p {
     margin-bottom: 25px;
     font-size: 1.2rem;
@@ -312,6 +365,7 @@ section.logo {
     margin-left: auto;
     margin-right: auto;
   }
+
   ul {
     list-style: none;
     padding: 0;
@@ -331,82 +385,13 @@ section.logo {
   }
 }
 
-// Adicionando os estilos para .tutorial-jogo e .guia-quests que foram sugeridos
-.tutorial-jogo {
-  padding: 40px 20px;
-  background-color: variaveis.$corNeutra;
-  color: variaveis.$corTexto;
-  text-align: center;
-  h1 {
-    font-family: variaveis.$fonteTitulos;
-    color: variaveis.$corTerciaria;
-    margin-bottom: 30px;
-    font-size: 2.8rem;
-  }
-  h2 {
-    color: variaveis.$corSecundaria;
-    margin-top: 30px;
-    border-bottom: 1px solid variaveis.$corBorda;
-    padding-bottom: 5px;
-    font-family: variaveis.$fonteTitulos;
-  }
-  ul {
-    list-style: none;
-    padding-left: 0;
-    li {
-      margin-bottom: 8px;
-      strong {
-        color: variaveis.$corTerciaria; // Ou outra cor de destaque para os comandos
-      }
-    }
-  }
-  em {
-    display: block;
-    text-align: center;
-    margin-top: 30px;
-    font-size: 0.9em;
-    color: variaveis.$corTextoSecundario;
-  }
-}
-
-.guia-quests {
-  padding: 40px 20px;
-  background-color: color.adjust(variaveis.$corDeFundo, $lightness: 2%);
-  text-align: center;
-
-  h1 {
-    font-family: variaveis.$fonteTitulos;
-    color: variaveis.$corTerciaria;
-    margin-bottom: 30px;
-    font-size: 2.8rem;
-  }
-  h2 {
-    color: variaveis.$corPrimaria;
-    margin-top: 30px;
-    font-family: variaveis.$fonteTitulos;
-  }
-  ul {
-    list-style: disc;
-    padding-left: 20px; // Pequeno recuo para listas com marcadores
-    li {
-      margin-bottom: 8px;
-      strong {
-        color: variaveis.$corSecundaria;
-      }
-    }
-  }
-  p {
-    margin-bottom: 15px; // Espaçamento entre parágrafos
-  }
-}
-// Fim dos estilos para .tutorial-jogo e .guia-quests
-
 footer {
   background-color: color.adjust(variaveis.$corDeFundo, $lightness: -10%);
   color: variaveis.$corTextoSecundario;
   text-align: center;
   padding: 20px;
   font-size: 0.9rem;
+
   p {
     margin: 5px 0;
   }
