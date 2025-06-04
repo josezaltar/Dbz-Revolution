@@ -296,10 +296,7 @@ section.logo {
 
 .comunidade {
   padding: 40px 20px;
-  background-color: color.adjust(
-    variaveis.$corDeFundo,
-    $lightness: 3%
-  ); // CORRIGIDO
+  background-color: color.adjust(variaveis.$corDeFundo, $lightness: 3%);
   text-align: center;
 
   h1 {
@@ -339,12 +336,12 @@ section.logo {
   padding: 40px 20px;
   background-color: variaveis.$corNeutra;
   color: variaveis.$corTexto;
-
+  text-align: center;
   h1 {
-    color: variaveis.$corPrimaria;
-    text-align: center;
-    margin-bottom: 20px;
     font-family: variaveis.$fonteTitulos;
+    color: variaveis.$corTerciaria;
+    margin-bottom: 30px;
+    font-size: 2.8rem;
   }
   h2 {
     color: variaveis.$corSecundaria;
@@ -374,16 +371,14 @@ section.logo {
 
 .guia-quests {
   padding: 40px 20px;
-  background-color: color.adjust(
-    variaveis.$corDeFundo,
-    $lightness: 2%
-  ); // Um pouco diferente para variar
+  background-color: color.adjust(variaveis.$corDeFundo, $lightness: 2%);
+  text-align: center;
 
   h1 {
-    color: variaveis.$corTerciaria;
-    text-align: center;
-    margin-bottom: 20px;
     font-family: variaveis.$fonteTitulos;
+    color: variaveis.$corTerciaria;
+    margin-bottom: 30px;
+    font-size: 2.8rem;
   }
   h2 {
     color: variaveis.$corPrimaria;
@@ -391,7 +386,7 @@ section.logo {
     font-family: variaveis.$fonteTitulos;
   }
   ul {
-    list-style: disc; // Adicionando um estilo de lista para diferenciar
+    list-style: disc;
     padding-left: 20px; // Pequeno recuo para listas com marcadores
     li {
       margin-bottom: 8px;
