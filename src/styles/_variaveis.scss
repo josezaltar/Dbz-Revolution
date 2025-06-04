@@ -1,3 +1,6 @@
+// Incluir o módulo de cores do Sass
+@use "sass:color"; // Agora você pode usar color.adjust e color.scale
+
 // Paleta de Cores Dragon Ball Z Revolution (Exemplo)
 $corDeFundo: #1a252f; // Azul bem escuro ou preto
 $corTexto: #f0f0f0; // Texto principal claro (branco/cinza claro)
@@ -8,7 +11,10 @@ $corSecundaria: #007bff; // Azul (Detalhes, Ki, Vegeta)
 $corTerciaria: #ffd700; // Amarelo/Dourado (Super Saiyajin, destaques)
 
 $corNeutra: #343a40; // Um cinza escuro para cards, fundos de seção
-$corDestaqueHover: lighten($corPrimaria, 10%);
+$corDestaqueHover: color.adjust(
+  $corPrimaria,
+  $lightness: 10%
+); // Usando color.adjust
 $corBorda: #495057;
 
 // Fontes (Exemplo, você pode definir mais aqui)
