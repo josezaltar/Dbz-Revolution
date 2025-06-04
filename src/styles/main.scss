@@ -1,13 +1,44 @@
-@use "sass:color"; // Certifique-se que esta é a primeira linha de código SASS funcional
-@use "variaveis";
+@use "sass:color";
+@use "variaveis"; // Certifique-se que este arquivo existe e contém suas variáveis (ex: $corDeFundo, $fontePrincipal, $corPrimaria, $larguraMaximaContainer, etc.)
 
+// --- Font Faces ---
 @font-face {
   font-family: "SaiyanSans";
   src: url("../../assets/fonts/Saiyan-Sans.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
+  font-display: swap; // Melhor performance de carregamento da fonte
 }
 
+// --- Mixins ---
+@mixin titulo-secao-padrao(
+  $size: 80px,
+  $margin-bottom: 20px,
+  $stroke-width: null,
+  $text-align: center
+) {
+  font-family: variaveis.$fonteTitulos;
+  font-size: $size;
+  color: variaveis.$corPrimaria;
+  text-align: $text-align;
+  margin-bottom: $margin-bottom;
+  @if $stroke-width {
+    -webkit-text-stroke: $stroke-width #000;
+    // text-stroke: $stroke-width #000; // Descomente para a propriedade padrão (verificar suporte)
+  }
+}
+
+// --- Placeholders (Regras Gerais) ---
+%secao-base {
+  margin: 20px auto;
+  max-width: 80%; // Ou variaveis.$larguraMaximaSecaoGeral
+  background-color: color.adjust(variaveis.$corDeFundo, $lightness: 5%);
+  border-radius: 8px; // Ou variaveis.$raioBordaPadrao
+  padding: 20px; // Ou variaveis.$paddingSecaoPadrao
+  border: 1px solid variaveis.$corBorda;
+}
+
+// --- Base & Reset (Simplificado) ---
 body {
   font-family: variaveis.$fontePrincipal;
   background-color: variaveis.$corDeFundo;
@@ -15,12 +46,20 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.6;
-
-  * {
-    -webkit-text-stroke: 0.1px #000;
-  }
+  // text-stroke global removido de '*' - aplicar especificamente onde necessário
 }
 
+// --- Layout Utilities ---
+.container {
+  width: 100%; // Ocupa a largura do pai (que pode ser a %secao-base)
+  max-width: variaveis.$larguraMaximaContainer; // Ex: 900px ou 1140px (defina em variaveis.scss)
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px; // Gutters laterais
+  padding-right: 15px; // Gutters laterais
+}
+
+// --- Header ---
 header {
   background-color: color.adjust(variaveis.$corDeFundo, $lightness: -5%);
   color: variaveis.$corTexto;
@@ -40,11 +79,15 @@ header {
         a {
           text-decoration: none;
           color: variaveis.$corTexto;
-          font-size: 28px;
+          font-size: 28px; // Considere responsividade para este tamanho
           font-family: variaveis.$fonteTitulos;
 
-          &:hover {
+          &:hover,
+          &:focus {
+            // Adicionado :focus para acessibilidade
             color: variaveis.$corPrimaria;
+            outline: 2px solid transparent; // Remove outline padrão se houver um customizado, ou defina um melhor
+            outline-offset: 2px;
           }
         }
       }
@@ -52,186 +95,172 @@ header {
   }
 }
 
+// --- Section: Logo Banner (#inicio) ---
 section.logo {
+  // Se for sempre <section id="inicio" class="logo">
   text-align: center;
   padding: 0;
-  margin: 0;
-  width: 100vw;
-  height: 100vh;
+  margin: 0; // Reset de margem para ocupar a tela toda
+  width: 100%; // Ocupa a largura da viewport
+  min-height: 100vh; // Altura mínima da viewport
+  display: flex; // Para centralizar a imagem filha
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; // Para garantir que a imagem não cause scroll se for maior
 
   img {
     width: 100%;
     height: 100%;
     object-position: center;
     object-fit: cover;
+    max-width: 100%; // Garante que a imagem não ultrapasse o container
+    max-height: 100vh;
   }
 }
 
+// --- Section: Sinopse (#sobre) ---
 .sinopse {
-  margin: 20px auto;
-  max-width: 80%;
-  background-color: color.adjust(variaveis.$corDeFundo, $lightness: 5%);
-  border-radius: 8px;
-  padding: 20px;
-  border: 1px solid variaveis.$corBorda;
+  @extend %secao-base;
 
   h1 {
-    font-family: variaveis.$fonteTitulos;
-    font-size: 80px;
-    color: variaveis.$corPrimaria;
-    text-align: center;
-    margin-bottom: 20px;
+    @include titulo-secao-padrao(
+      $size: 70px,
+      $margin-bottom: 15px
+    ); // Exemplo de tamanho e margem ajustados
   }
 
   h2,
   h3 {
+    // Estilo comum para h2 e h3 dentro da sinopse
     font-family: variaveis.$fonteTitulos;
     font-size: 28px;
     color: variaveis.$corPrimaria;
     text-align: center;
-    margin-bottom: 20px;
+    margin-top: 25px;
+    margin-bottom: 15px;
   }
 
   p {
     color: variaveis.$corTextoSecundario;
-    font-size: 20px;
+    font-size: 20px; // Considere usar rem para acessibilidade
     margin-bottom: 15px;
-    -webkit-text-stroke: 0.2px #000;
+    -webkit-text-stroke: 0.2px #000; // Aplicado especificamente aqui
 
+    // Para 'i b', considere uma classe como .texto-destacado-importante
     i b {
-      color: variaveis.$corTexto;
+      color: variaveis.$corTexto; // Sobrescreve a cor do texto secundário
+    }
+  }
+}
+// --- Section: Personagens (#personagens) ---
+.personagens {
+  @extend %secao-base;
+
+  h1 {
+    @include titulo-secao-padrao();
+  }
+
+  .personagem {
+    display: flex;
+    flex-wrap: wrap; // Permite que os itens quebrem para a linha seguinte
+    justify-content: space-between; // Para espaçar os itens igualmente na linha
+    gap: 20px; // Espaçamento entre os cards dos personagens
+
+    .personagem-card {
+      width: calc(
+        20% - 20px
+      ); // 5 cards por linha com espaçamento de 20px entre eles
+      padding: 20px;
+      background-color: variaveis.$corNeutra;
+      border: 2px solid variaveis.$corPrimaria;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      text-align: center;
+
+      img {
+        width: 100%;
+        max-width: 180px;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        border: 2px solid variaveis.$corSecundaria;
+      }
+
+      h3 {
+        font-size: 2rem;
+        font-family: variaveis.$fonteTitulos;
+        color: variaveis.$corPrimaria;
+        margin: 10px 0;
+      }
+
+      p {
+        font-size: 1.1rem;
+        line-height: 1.5;
+        color: variaveis.$corTexto;
+      }
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .personagem .personagem-card {
+      width: calc(25% - 20px); // 4 cards por linha em telas médias
+    }
+  }
+
+  @media (max-width: 992px) {
+    .personagem .personagem-card {
+      width: calc(33.33% - 20px); // 3 cards por linha em telas menores
+    }
+  }
+
+  @media (max-width: 768px) {
+    .personagem .personagem-card {
+      width: calc(50% - 20px); // 2 cards por linha em tablets
+    }
+  }
+
+  @media (max-width: 480px) {
+    .personagem .personagem-card {
+      width: 100%; // 1 card por linha em celulares
     }
   }
 }
 
-.personagens {
-  padding: 40px 20px;
-
-  h1 {
-    font-family: variaveis.$fonteTitulos;
-    font-size: 80px;
-    color: variaveis.$corPrimaria;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 10px;
-    text-align: center;
-    margin: 0 auto;
-  }
-
-  td {
-    padding: 20px;
-    vertical-align: top;
-    background-color: variaveis.$corNeutra;
-    border: 2px solid variaveis.$corPrimaria;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  }
-
-  img {
-    width: 100%;
-    max-width: 180px;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    border: 2px solid variaveis.$corSecundaria;
-  }
-
-  h3 {
-    font-size: 2rem;
-    font-family: variaveis.$fonteTitulos;
-    color: variaveis.$corPrimaria;
-    margin: 10px 0;
-  }
-
-  p {
-    font-size: 1.1rem;
-    line-height: 1.5;
-    color: variaveis.$corTexto;
-  }
-}
-
-// Responsividade para Personagens (do arquivo original)
-@media (max-width: 768px) {
-  .personagens table {
-    font-size: 0.9rem;
-  }
-
-  .personagens img {
-    max-width: 120px;
-    height: 120px;
-  }
-}
-
-@media (max-width: 480px) {
-  .personagens table {
-    font-size: 0.8rem;
-  }
-
-  .personagens img {
-    max-width: 100px;
-    height: 100px;
-  }
-
-  .personagens td {
-    padding: 10px;
-  }
-}
-
+// --- Section: Trailer/Galeria (#galeria) ---
 .trailer {
+  @extend %secao-base;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 40px 0;
-  margin: 0;
-  width: 100vw;
-  min-height: 80vh;
-  background-color: color.adjust(variaveis.$corDeFundo, $lightness: -3%);
-
-  h1 {
-    font-family: variaveis.$fonteTitulos;
-    font-size: 80px;
-    color: variaveis.$corPrimaria;
-    text-align: center;
-    margin-bottom: 20px;
-  }
 
   iframe {
-    width: 80%;
-    height: 45vw;
-    max-width: 900px;
-    max-height: 506px;
+    width: 100%; // Ajusta para 100% do container pai (que tem max-width)
+    max-width: 900px; // Limite máximo para o iframe
+    aspect-ratio: 16 / 9; // Mantém a proporção do vídeo responsivamente
+    height: auto; // Altura automática baseada na proporção
     border: 3px solid variaveis.$corTerciaria;
     border-radius: 8px;
   }
 }
 
+// --- Section: Tutorial Jogo (#tutorial) ---
 .tutorial-jogo {
-  padding: 40px 20px;
-  background-color: color.adjust(variaveis.$corDeFundo, $lightness: 3%);
-  color: variaveis.$corTexto;
+  @extend %secao-base;
   text-align: center;
 
   h1 {
-    font-family: variaveis.$fonteTitulos;
-    font-size: 80px;
-    color: variaveis.$corPrimaria;
-    margin-bottom: 20px;
-    text-align: center;
-    -webkit-text-stroke: 1px #000; // Contorno preto
+    @include titulo-secao-padrao($stroke-width: 1px);
   }
 
   .container {
+    text-align: left; // Texto das listas e parágrafos dentro do container volta a ser à esquerda
+
     p {
-      font-size: 22px;
+      font-size: 20px;
       color: variaveis.$corTextoSecundario;
       margin-bottom: 15px;
+      text-align: center;
     }
 
     h2 {
@@ -241,7 +270,8 @@ section.logo {
       border-bottom: 1px solid variaveis.$corBorda;
       padding-bottom: 5px;
       font-family: variaveis.$fonteTitulos;
-      -webkit-text-stroke: 1px #000; // Contorno preto
+      -webkit-text-stroke: 1px #000;
+      text-align: center;
     }
 
     ul {
@@ -264,40 +294,115 @@ section.logo {
       color: variaveis.$corTextoSecundario;
     }
   }
-}
 
-// Responsividade para dispositivos menores
-@media (max-width: 768px) {
-  .tutorial-jogo h1 {
-    font-size: 40px; // Ajuste do tamanho do título em telas menores
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 40px;
+    }
+    .container h2 {
+      font-size: 24px;
+    }
   }
 
-  .tutorial-jogo h2 {
-    font-size: 24px; // Ajuste do tamanho do subtítulo
-  }
-}
-
-@media (max-width: 480px) {
-  .tutorial-jogo h1 {
-    font-size: 28px; // Ajuste do tamanho do título em telas muito pequenas
-  }
-
-  .tutorial-jogo h2 {
-    font-size: 20px; // Ajuste do tamanho do subtítulo
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 28px;
+    }
+    .container h2 {
+      font-size: 20px;
+    }
   }
 }
 
-.downloads {
-  padding: 40px 20px;
-  text-align: center;
-  font-size: 40px;
+// --- Section: Guia de Quests (#Quests) ---
+.guia-quests {
+  @extend %secao-base;
+  .container {
+    text-align: left;
+  }
 
   h1 {
+    @include titulo-secao-padrao($size: 60px, $stroke-width: 0.5px);
+  }
+
+  h2 {
     font-family: variaveis.$fonteTitulos;
-    font-size: 80px;
-    color: variaveis.$corPrimaria;
-    text-align: center;
+    font-size: 32px;
+    color: variaveis.$corSecundaria;
+    margin-top: 40px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid variaveis.$corBorda;
+    padding-bottom: 8px;
+    text-align: left;
+  }
+
+  p {
+    font-family: variaveis.$fontePrincipal;
+    font-size: 18px;
+    line-height: 1.7;
+    color: variaveis.$corTextoSecundario;
     margin-bottom: 20px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 20px;
+
+    li {
+      font-family: variaveis.$fontePrincipal;
+      font-size: 17px;
+      color: variaveis.$corTexto;
+      padding: 10px 0;
+      border-bottom: 1px dashed color.adjust(variaveis.$corBorda, $alpha: -0.5);
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      strong {
+        font-family: variaveis.$fonteTitulos;
+        font-weight: bold;
+        color: variaveis.$corPrimaria;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 48px;
+    }
+    h2 {
+      font-size: 28px;
+    }
+    p,
+    ul li {
+      font-size: 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 30px 15px;
+    h1 {
+      font-size: 36px;
+    }
+    h2 {
+      font-size: 24px;
+    }
+  }
+}
+
+// --- Section: Downloads (#downloads) ---
+.downloads {
+  @extend %secao-base;
+  text-align: center;
+
+  h1 {
+    @include titulo-secao-padrao();
   }
 
   .download-item {
@@ -308,20 +413,23 @@ section.logo {
     max-width: 600px;
     border: 1px solid variaveis.$corBorda;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-align: left;
 
     h3 {
       color: variaveis.$corPrimaria;
       margin-top: 0;
       font-size: 24px;
+      text-align: center;
     }
     p {
       color: variaveis.$corTexto;
       margin-bottom: 10px;
+      font-size: 1em;
     }
     .download-info {
       font-size: 0.9em;
       color: variaveis.$corTextoSecundario;
-      -webkit-text-stroke: 0.2px #000; // Contorno de 1px na cor preta
+      -webkit-text-stroke: 0.2px #000;
     }
     .btn-download {
       display: inline-block;
@@ -334,65 +442,16 @@ section.logo {
       font-family: variaveis.$fonteTitulos;
       margin-top: 15px;
       transition: background-color 0.3s ease;
+      text-align: center;
 
-      &:hover {
+      &:hover,
+      &:focus {
         background-color: color.adjust(
           variaveis.$corSecundaria,
           $lightness: 10%
         );
+        outline: none;
       }
     }
-  }
-}
-
-.comunidade {
-  padding: 40px 20px;
-  background-color: color.adjust(variaveis.$corDeFundo, $lightness: 3%);
-  text-align: center;
-
-  h1 {
-    font-family: variaveis.$fonteTitulos;
-    font-size: 80px;
-    color: variaveis.$corPrimaria;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  p {
-    margin-bottom: 25px;
-    font-size: 1.2rem;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-    li {
-      margin-bottom: 10px;
-      a {
-        color: variaveis.$corPrimaria;
-        font-size: 1.5rem;
-        text-decoration: none;
-        font-family: variaveis.$fonteTitulos;
-        &:hover {
-          color: variaveis.$corDestaqueHover;
-          text-decoration: underline;
-        }
-      }
-    }
-  }
-}
-
-footer {
-  background-color: color.adjust(variaveis.$corDeFundo, $lightness: -10%);
-  color: variaveis.$corTextoSecundario;
-  text-align: center;
-  padding: 20px;
-  font-size: 0.9rem;
-
-  p {
-    margin: 5px 0;
   }
 }

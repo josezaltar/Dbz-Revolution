@@ -1,28 +1,118 @@
-// Incluir o módulo de cores do Sass
-@use "sass:color"; // Agora você pode usar color.adjust e color.scale
+// _variaveis.scss
 
-// Paleta de Cores Dragon Ball Z Revolution (Exemplo)
-$corDeFundo: #1a252f; // Azul bem escuro ou preto
+// Incluir o módulo de cores do Sass para usar suas funções como color.adjust
+@use "sass:color";
+
+// -----------------------------------------------------------------------------
+// !PALETA DE CORES - Dragon Ball Z Revolution
+// -----------------------------------------------------------------------------
+
+// Cores de Fundo e Texto Base
+$corDeFundo: #1a252f; // Azul bem escuro ou preto, para o fundo principal do corpo
 $corTexto: #f0f0f0; // Texto principal claro (branco/cinza claro)
-$corTextoSecundario: #a0a0a0; // Texto secundário (cinza)
+$corTextoSecundario: #a0a0a0; // Texto secundário (cinza) para parágrafos menos importantes, metadados
 
-$corPrimaria: #ff6600; // Laranja vibrante (Gi do Goku)
-$corSecundaria: #007bff; // Azul (Detalhes, Ki, Vegeta)
-$corTerciaria: #ffd700; // Amarelo/Dourado (Super Saiyajin, destaques)
+// Cores Temáticas Principais (Vibrantes)
+$corPrimaria: #ff6600; // Laranja vibrante (uniforme Goku, chamadas para ação, destaques principais)
+$corSecundaria: #007bff; // Azul (detalhes de Ki, uniforme Vegeta, links, elementos secundários importantes)
+$corTerciaria: #ffd700; // Amarelo/Dourado (Super Saiyajin, ícones de estrela, destaques especiais)
 
-$corNeutra: #343a40; // Um cinza escuro para cards, fundos de seção
-$corBorda: #495057;
+// Cores Neutras e de UI
+$corNeutra: #343a40; // Cinza escuro para fundos de cards, separadores, elementos de UI discretos
+$corBorda: #495057; // Cor para bordas de containers, inputs, etc.
 
-// Fontes (Exemplo, você pode definir mais aqui)
-$fontePrincipal: "SaiyanSans", sans-serif; // Nome da fonte que você escolherá
-$fonteTitulos: "SaiyanSans", sans-serif; // Pode ser a mesma ou outra
-
-// Usando color.adjust para clarear e escurecer
+// Cores Derivadas (calculadas a partir das cores base)
 $corDestaqueHover: color.adjust(
   $corPrimaria,
   $lightness: 10%
-); // Usando color.adjust para clarear
-$corFundoEscuro: color.adjust(
+); // Clareia a cor primária para efeito hover
+$corFundoEscuroAlternativo: color.adjust(
   $corDeFundo,
   $lightness: -5%
-); // Usando color.adjust para escurecer
+); // Um tom ligeiramente mais escuro que o fundo principal
+$corFundoClaroAlternativo: color.adjust(
+  $corDeFundo,
+  $lightness: 5%
+); // Um tom ligeiramente mais claro que o fundo principal
+$corDestaqueFundo: color.adjust(
+  $corDeFundo,
+  $lightness: -3%
+); // Uma cor alternativa de fundo para áreas de destaque
+
+// -----------------------------------------------------------------------------
+// !FONTE E TIPO DE LETRA
+// -----------------------------------------------------------------------------
+
+$fontePrincipal: "SaiyanSans", "Arial", sans-serif; // Fonte para o corpo do texto, parágrafos
+$fonteTitulos: "SaiyanSans", "Impact", sans-serif; // Fonte para cabeçalhos (H1, H2, etc.), navegação
+
+// -----------------------------------------------------------------------------
+// !LARGURAS E ESPAÇAMENTOS
+// -----------------------------------------------------------------------------
+
+// Larguras Máximas
+$larguraMaximaContainer: 1140px; // Largura máxima para o .container principal dentro das seções
+$larguraPercentualSecaoGeral: 80%; // Largura percentual que as seções ocupam (ex: max-width: 80% em %secao-base)
+
+// Paddings
+$paddingSecaoPadrao: 20px; // Padding padrão para seções (usado em %secao-base)
+$paddingContainerGeral: 15px; // Padding lateral para a classe .container (gutters)
+
+// Bordas
+$raioBordaPadrao: 8px; // Raio de borda padrão para cards, seções, botões (usado em %secao-base)
+$espessuraBordaPadrao: 1px; // Espessura padrão para bordas
+
+// -----------------------------------------------------------------------------
+// !OUTRAS VARIÁVEIS GERAIS
+// -----------------------------------------------------------------------------
+
+// Z-index para elementos sobrepostos
+$zIndexDropdown: 10;
+$zIndexModal: 100;
+
+// Transições globais
+$transicaoPadrao: all 0.3s ease-in-out;
+
+// -----------------------------------------------------------------------------
+// !ESPACAMENTOS ADICIONAIS
+// -----------------------------------------------------------------------------
+$espacamentoPequeno: 10px;
+$espacamentoMedio: 20px;
+$espacamentoGrande: 40px;
+
+// -----------------------------------------------------------------------------
+// !CORES EXTRAS (DE ACORDO COM A DEMANDA)
+$corSecundariaClaro: color.adjust(
+  $corSecundaria,
+  $lightness: 20%
+); // Um tom mais claro do azul para elementos mais suaves
+$corSecundariaEscuro: color.adjust(
+  $corSecundaria,
+  $lightness: -20%
+); // Um tom mais escuro do azul para hover ou foco
+
+$corPrimariaClaro: color.adjust(
+  $corPrimaria,
+  $lightness: 15%
+); // Um tom mais claro de laranja para botões e hover
+
+// Cores para transições, hover e foco
+$corFundoHover: color.adjust(
+  $corDeFundo,
+  $lightness: -10%
+); // Fundo mais escuro para efeito de hover
+$corFundoFocus: color.adjust(
+  $corDeFundo,
+  $lightness: -3%
+); // Para foco em inputs ou botões
+$corTextoHover: color.adjust(
+  $corTexto,
+  $lightness: -10%
+); // Para texto com hover mais suave
+
+// -----------------------------------------------------------------------------
+// !BREAKPOINTS (TAMANHOS DE TELA)
+// -----------------------------------------------------------------------------
+
+$breakpointTablet: 768px; // Tablet em orientação retrato
+$breakpointMobile: 480px; // Mobile em orientação retrato
